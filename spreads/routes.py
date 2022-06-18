@@ -1,13 +1,7 @@
-from flask import render_template, session, url_for
-from flask_login import login_required
+from flask import render_template
 
-from spreads import app, oauth
+from spreads import app
 
 @app.route('/')
 def index():
-    try:
-        token = session['token']
-        img_url = token['userinfo']['picture']
-    except KeyError:
-        img_url = None
-    return render_template('index.html', img_url=img_url)
+    return render_template('index.html')

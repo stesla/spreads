@@ -20,10 +20,11 @@ def upgrade():
     op.create_table('users',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('social_id', sa.String(), nullable=False),
-        sa.Column('given_name', sa.String(), nullable=False),
-        sa.Column('family_name', sa.String(), nullable=False),
-        sa.Column('name', sa.String(), nullable=False),
-        sa.Column('email', sa.String(), nullable=False),
+        sa.Column('given_name', sa.String(), nullable=True),
+        sa.Column('family_name', sa.String(), nullable=True),
+        sa.Column('name', sa.String(), nullable=True),
+        sa.Column('email', sa.String(), nullable=True),
+        sa.Column('picture_url', sa.String(), nullable=True),
         sa.PrimaryKeyConstraint('id'),
         sa.UniqueConstraint('social_id')
     )

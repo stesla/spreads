@@ -41,10 +41,11 @@ def authorize():
     except NoResultFound:
         user = User(social_id=social_id)
         db.session.add(user)
-    user.given_name = userinfo['given_name']
-    user.family_name = userinfo['family_name']
-    user.name = userinfo['name']
     user.email = userinfo['email']
+    user.name = userinfo.get('name')
+    user.given_name = userinfo.get('given_name')
+    user.family_name = userinfo.get('family_name')
+    user.picture_url = userinfo.get('picture')
     db.session.commit()
     login_user(user)
     session.permanent = True
