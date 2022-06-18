@@ -132,4 +132,4 @@ dmypy.json
 node_modules/
 
 # generated files
-spreads/static/css/style.css
+spreads/static/css/styles.css
