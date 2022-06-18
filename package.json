@@ -1,0 +1,23 @@
+{
+  "name": "spreads",
+  "version": "1.0.0",
+  "description": "An application for making card spreads",
+  "main": "index.js",
+  "scripts": {
+    "jit:watch": "tailwindcss -i ./css/styles.css -o ./spreads/static/css/styles.css --watch",
+    "jit:build": "tailwindcss -i ./css/styles.css -o ./spreads/static/css/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stesla/spreads.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stesla/spreads/issues"
+  },
+  "homepage": "https://github.com/stesla/spreads#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
+  }
+}
