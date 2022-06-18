@@ -1,12 +1,11 @@
-from authlib.integrations.flask_client import OAuth
-from flask import redirect, session, url_for
+from flask import abort, redirect, request, session, url_for
 from flask_login import LoginManager, login_required, login_user, logout_user
 from sqlalchemy.exc import NoResultFound
+from urllib.parse import urlparse, urljoin
 
-from spreads import app, db
+from spreads import app, db, oauth
 from spreads.models import User
 
-oauth = OAuth(app)
 oauth.register(
     'google',
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
@@ -14,6 +13,7 @@ oauth.register(
 )
 
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -21,6 +21,7 @@ def load_user(user_id):
 
 @app.route('/login')
 def login():
+    session['next'] = get_redirect_target()
     redirect_uri = url_for('authorize', _external=True)
     return oauth.google.authorize_redirect(redirect_uri)
 
@@ -48,4 +49,18 @@ def authorize():
     db.session.commit()
     login_user(user)
     session.permanent = True
-    return redirect(url_for('index'))
+    nextUrl = session['next'] or url_for('index')
+    return redirect(nextUrl)
+
+def get_redirect_target():
+    for target in request.values.get('next'), request.referrer:
+        if not target:
+            continue
+        if is_safe_url(target):
+            return target
+
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and \
+        ref_url.netloc == test_url.netloc

@@ -1,5 +1,6 @@
 import os
 
+from authlib.integrations.flask_client import OAuth
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -15,6 +16,7 @@ app.config.from_envvar('FLASK_SETTINGS', silent=True)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+oauth = OAuth(app)
 
 import spreads.models
 import spreads.routes
