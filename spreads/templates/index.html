@@ -7,15 +7,17 @@
   </head>
   <body class="bg-gray-100">
     <div class="grid place-items-center h-screen">
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-between place-items-center">
         {% if current_user.is_authenticated %}
         <p class="text-4xl text-center">Hello, {{ current_user.given_name}}!</p>
-        <a href="{{ url_for('logout')}}" class="mt-10 px-4 py-2 bg-indigo-400 text-white text-center rounded-md">
+        <img class="mt-10 inline-block h-32 w-32 rounded-full"
+             src="{{img_url}}"/>
+        <a href="{{ url_for('logout')}}" class="mt-10 px-4 py-2 bg-indigo-400 text-white rounded-md">
           Logout
         </a>
         {% else %}
         <p class="text-4xl text-center">Hello, World!</p>
-        <a href="{{ url_for('login')}}" class="mt-10 px-2 py-2 bg-indigo-400 text-white text-center rounded-md">
+        <a href="{{ url_for('login')}}" class="mt-10 px-2 py-2 bg-indigo-400 text-white rounded-md">
           Login with Google
         </a>
       {% endif %}

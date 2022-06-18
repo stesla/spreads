@@ -35,7 +35,6 @@ def logout():
 def authorize():
     token = oauth.google.authorize_access_token()
     userinfo = token['userinfo']
-
     social_id = f'{userinfo["iss"]}|{userinfo["sub"]}'
     try:
         user = User.query.where(social_id == social_id).one()
@@ -49,6 +48,7 @@ def authorize():
     db.session.commit()
     login_user(user)
     session.permanent = True
+    session['token'] = token
     nextUrl = session['next'] or url_for('index')
     return redirect(nextUrl)
 
