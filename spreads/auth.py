@@ -37,7 +37,7 @@ def authorize():
     userinfo = token['userinfo']
     social_id = f'{userinfo["iss"]}|{userinfo["sub"]}'
     try:
-        user = User.query.where(social_id == social_id).one()
+        user = User.query.where(User.social_id == social_id).one()
     except NoResultFound:
         user = User(social_id=social_id)
         db.session.add(user)
