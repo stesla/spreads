@@ -12,6 +12,7 @@
         <p class="text-4xl text-center">Hello, {{ current_user.given_name or "Friend" }}!</p>
         {% if current_user.picture_url %}
         <img class="mt-10 inline-block h-32 w-32 rounded-full"
+             referrerpolicy="no-referrer"
              src="{{ current_user.picture_url }}"/>
         {% endif %}
         <a href="{{ url_for('logout') }}" class="mt-10 px-4 py-2 bg-indigo-400 text-white rounded-md">
